@@ -27,3 +27,8 @@ demo_data/
 # bak
 bak*/
 
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/SDFusion.iml
+/.idea/vcs.xml
