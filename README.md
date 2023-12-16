@@ -12,22 +12,31 @@ We also use a 3D-printer to print out the generated shapes of SDFusion.
 
 https://user-images.githubusercontent.com/27779063/206553305-e01009f7-3131-4a6b-bda7-572699d97338.mp4
 
-# Installation
-We recommend using [`conda`](https://www.anaconda.com/products/distribution) to install the required python packages. You might need to change the `cudatoolkit` version to match with your GPU driver.
+# Installation on Phoenix
+1. Connect to [`GT VPN`](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0026837) and use SSH to log into the cluster:
 ```
-conda create -n sdfusion python=3.8 -y && conda activate sdfusion
-conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=11.3 -c pytorch -c conda-forge -y
-conda install -c fvcore -c iopath -c conda-forge fvcore iopath -y
+ssh username@login-phoenix.pace.gatech.edu
+```
+
+2. Load `anaconda3/2022.05` Module in Phoenix following the instruction (https://docs.pace.gatech.edu/software/anacondaEnv/).
+
+3. Install the required Python packages in conda.
+```
+conda create -n sdfusion python=3.9 -y && conda activate sdfusion
+conda install pytorch=1.13.0 torchvision pytorch-cuda=11.6 -c pytorch -c nvidia
+conda install -c fvcore -c iopath -c conda-forge fvcore iopath
+conda install -c bottler nvidiacub
 conda install pytorch3d -c pytorch3d
 
-pip install h5py joblib termcolor scipy einops tqdm matplotlib opencv-python PyMCubes imageio trimesh omegaconf tensorboard notebook
+pip install h5py joblib termcolor scipy einops tqdm matplotlib opencv-python PyMCubes imageio trimesh omegaconf tensorboard notebook kornia ftfy regex
 ```
 
 # Usage
 
 ## Download the pretrained weight
 
-First create a foler to save the pre-trained weights. Here we assume the folder is `./saved_ckpt`. Then download the pre-trained weights from the provided links and put them in the `./saved_ckpt` folder.
+First create a foler to save the pre-trained weights. Here we assume the folder is `./saved_ckpt`. 
+Then download the pre-trained weights from the provided links and put them in the `./saved_ckpt` folder.
 ```
 mkdir saved_ckpt
 
@@ -48,11 +57,9 @@ wget https://uofi.box.com/shared/static/d95l3465arc0ffley5vwmz8bscaubmhc.pth -O 
 
 ```
 
-## Demo
-Please check the provided jupyter notebooks for how to use the code. First open the jupyter notebook server.
-```
-jupyter notebook
-```
+## Demo on Phoenix
+### Jupyter notebook
+Use [`Open OnDemand`](https://ondemand-phoenix.pace.gatech.edu/pun/sys/dashboard/) to open jupyter notebook.
 
 Then, open one of the following notebooks for the task you want to perform.
 
@@ -63,6 +70,12 @@ Then, open one of the following notebooks for the task you want to perform.
 5. (coming soon!) Text-guided Texturization: `demo_txt2tex.ipynb`
 
 Note that the notebooks will automatically save the generated shapes in the `./demo_results` folder.
+### Batch jobs
+Use Slurm commands to submit batch jobs. An example of a Slurm commands is in `script/example.sbatch`, and it uses a conda environment to run python files. To submit the job, run
+`sbatch scripts/example.sbatch`.
+
+For more details, please refer to https://docs.pace.gatech.edu/phoenix_cluster/slurm_guide_phnx/#interactive-jobs.
+
 
 # How to train the SDFusion
 
