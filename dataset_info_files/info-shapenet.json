@@ -31,8 +31,8 @@
         "watercraft"
     ],
     "raw_dirs_v1": {
-        "mesh_dir": "../data/ShapeNet/ShapeNetCore.v1/",
-        "norm_mesh_dir": "../data/ShapeNet/norm_mesh_dir_v1/",
-        "sdf_dir": "../data/ShapeNet/SDF_v1"
+        "mesh_dir": "../../../dataset/ShapeNetV1/ShapeNetCore.v1/",
+        "norm_mesh_dir": "../../../dataset/ShapeNetV1/norm_mesh_dir_v1/",
+        "sdf_dir": "../../../dataset/ShapeNetV1/SDF_v1"
     }
 }

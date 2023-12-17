@@ -46,6 +46,7 @@ from pytorch3d.renderer import (
 from pytorch3d.transforms import RotateAxisAngle
 from pytorch3d.structures import Meshes
 
+
 ########################################## io ##########################################
 def read_sdf(sdf_h5_file, resolution=64):
     h5_f = h5py.File(sdf_h5_file, 'r')
@@ -78,10 +79,9 @@ def save_mesh_as_gif(mesh_renderer, mesh, nrow=3, fps=450, out_name='1.gif'):
         img_grid_i = img_grid_i.permute(0, 3, 1, 2)
         img_grid_i = vutils.make_grid(img_grid_i, nrow=nrow)
         img_grid_i = img_grid_i.permute(1, 2, 0).numpy().astype(np.uint8)
-        # img_grid_i = img_grid_i.permute(1, 2, 0).numpy().astype(np.uint8)
             
         rot_comb_img.append(img_grid_i)
-    
+
 
     duration = nrots / fps
 
@@ -89,7 +89,6 @@ def save_mesh_as_gif(mesh_renderer, mesh, nrow=3, fps=450, out_name='1.gif'):
     with imageio.get_writer(out_name, mode='I', duration=duration) as writer:
         # combine them according to nrow
         for rot in rot_comb_img:
-
             writer.append_data(rot)
 ####################################################################################
 

@@ -28,7 +28,7 @@ conda install -c fvcore -c iopath -c conda-forge fvcore iopath
 conda install -c bottler nvidiacub
 conda install pytorch3d -c pytorch3d
 
-pip install h5py joblib termcolor scipy einops tqdm matplotlib opencv-python PyMCubes imageio trimesh omegaconf tensorboard notebook kornia ftfy regex
+pip install h5py joblib termcolor scipy einops tqdm matplotlib opencv-python PyMCubes imageio==2.19 trimesh omegaconf tensorboard notebook kornia ftfy regex transformers
 ```
 
 # Usage
@@ -71,10 +71,12 @@ Then, open one of the following notebooks for the task you want to perform.
 
 Note that the notebooks will automatically save the generated shapes in the `./demo_results` folder.
 ### Batch jobs
-Use Slurm commands to submit batch jobs. An example of a Slurm commands is in `script/example.sbatch`, and it uses a conda environment to run python files. To submit the job, run
-`sbatch scripts/example.sbatch`.
+The following are commands related to batch jobs. For more details, please refer to https://docs.pace.gatech.edu/phoenix_cluster/slurm_guide_phnx.
+- submit job: `sbatch script.sbatch`
+- check job status: `squeue --job <jobID>`
+- delete job: `scancel <jobID>`
 
-For more details, please refer to https://docs.pace.gatech.edu/phoenix_cluster/slurm_guide_phnx/#interactive-jobs.
+An example of the script is in `script/gpu.sbatch`. The script uses a V100 GPU and `sdfusion_cu116` conda environment to perform text-guided shape generation.
 
 
 # How to train the SDFusion
@@ -97,7 +99,7 @@ cd preprocess
 
 * BuildingNet
     1. Download the BuildingNet dataset from the [official website](https://buildingnet.org/). After you fill out [the form](https://docs.google.com/forms/d/e/1FAIpQLSevg7fWWMYYMd1vaOdDloUX_55VOQK7PqS1DlniFV7_vuoI0w/viewform), please download the v0 version of the dataset and uncompress it under `./data`. Here we assume the extracted folder is `./data/BuildingNet_dataset_v0_1`.
-    2. Run the following command for preprocessing the SDF from mesh.
+    2. Run the following command for preprocessing the SDF from mesh.·
 ```
 cd preprocess
 ./launchers/launch_create_sdf_building.sh
